@@ -30,6 +30,7 @@ class Wallet(db.Model, Audit):
 
     id = db.Column(db.Integer, primary_key=True)
     balance = db.Column(db.Numeric, nullable=False)
+    user_id = db.Column(db.Integer, primary_key=True)
     user = db.relationship("User", back_populates="wallet")
 
     def __init__(self, balance: Decimal, user: User) -> "Wallet":
