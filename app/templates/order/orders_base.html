@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %} 
+
+{% block article %}
+    {% for order_data in nested_order_data %}
+        {{ macros.show_order_info(order_data) }} 
+    {% endfor %}
+{% endblock %}
+ 

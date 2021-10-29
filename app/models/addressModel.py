@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app import db#, app
+from app import db, app
 from sqlalchemy import event
 from app.models.auditModel import Audit
 from app.models.userModel import User
@@ -16,13 +16,24 @@ class Address(db.Model, Audit):
     country = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     shippings = db.relationship("Shipping")
-    
+
+    def __init__(self, main: str, city: str,
+                state: str, country: str, user_id: int):
+        """
+        Initializes an address object
+        """
+        self.main = main
+        self.city = city
+        self.state = state
+        self.country = country
+        self.user_id = user_id
+
     def __repr__(self):
         user = db.session.query(User).get(self.user_id)
         return '<Adress_id: {}, Adress_ain_info: {}, Adrress_city = {},'\
-        ' Adress_state = {}, Address countryy; {}, Usuario: {}>'.format(
+        ' Adress_state = {}, Address countryy; {}, Usuario_id: {}>'.format(
         self.id, self.main_info, self.city, self.state,
-        self.country, user)
+        self.country, user.id)
 
 @event.listens_for(Address, "after_update")
 def address_after_update(mapper, connection, target):
@@ -32,5 +43,5 @@ def address_after_update(mapper, connection, target):
              where(address_table.c.id==target.id).
              values(updated_at=datetime.now())
              )
-    #app.logger.info("register {} has been updated at {}".\
-    #   format(target, target.updated_at))
+    app.logger.info("register {} with id {} has been updated at {}".\
+        format(target.__class__.__tablename__, target.id, target.updated_at))

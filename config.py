@@ -11,11 +11,17 @@ load_dotenv(path.join(basedir, ".env"))
 class Config:
     """Configuration from environment variables."""
 
+    SQLALCHEMY_DATABASE_URI = 'postgresql:///dreamful'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = environ.get("SECRET_KEY", 'default-key')
     FLASK_ENV = environ.get("FLASK_ENV")
     FLASK_APP = "wsgi.py"
-    # API
-    BEST_BUY_API_KEY = environ.get("BEST_BUY_API_KEY")
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 465
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
+    MAIL_USERNAME = environ.get('EMAIL_USER')
+    MAIL_PASSWORD = environ.get('EMAIL_PASSWORD')
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True

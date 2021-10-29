@@ -1,5 +1,9 @@
+<head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="{{ url_for('static', filename='images/chow.png')}}" alt="chow-dreamful" height="36">
+      </a>
       <a class="navbar-brand" href="#">Dreamful</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -17,10 +21,13 @@
               Account
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Orders</a></li>
-              <li><a class="dropdown-item" href="#">Wallet</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">tracking</a></li>
+              {% if current_user.is_anonymous %}
+                <li><a class="dropdown-item" href="{{ url_for('auth_bp.login') }}">Login</a></li>
+              {% else %}
+                <li><a class="dropdown-item" href="#">Management</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth_bp.logout') }}">Log out</a></li>
+              {% endif %}
             </ul>
         </ul>
         <form class="d-flex">
@@ -30,3 +37,4 @@
       </div>
     </div>
   </nav>
+</head>

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %} 
+
+{% block article %}
+
+{% for product_data in nested_product_data %}
+
+{{ macros.show_product_info(product_data) }} 
+
+{% endfor %}
+
+{% endblock %}

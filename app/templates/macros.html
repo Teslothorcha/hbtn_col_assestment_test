@@ -1,0 +1,85 @@
+{% macro show_order_info(order_data) %}
+    {% if order_data['error_msg'] %}
+    <div>
+        <h1> Error</h1>
+        <h2>{{ order_data['error_msg'] }}</h2>
+    </div>
+    {% else %}
+        <h1>Order Information</h1>
+        <ul>
+        {% for key, value in order_data.items() %}
+        <div>
+            {% if  key  == 'order_products' %}
+                <div>
+                    <p>
+                        Order products
+                    </p>
+                    {% for product in order_data['order_products'] %}
+                    <li>
+                        {{ product }}
+                    </li>
+                    {% endfor %}
+                </div>
+            {% elif  key  == 'order_payments' %}
+                <div>
+                    <p>
+                        Order payments
+                    </p>
+                    {% for product in order_data['order_products'] %}
+                    <li>
+                        {{ product }}
+                    </li>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>
+                    {{ key }} : {{ value }}
+                </p> 
+            {% endif %}
+        </div>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% macro show_user_info(user_data) %}
+    {% if user_data['error_msg'] %}
+    <div>
+        <h1> Error</h1>
+        <h2>{{ user_data['error_msg'] }}</h2>
+    </div>
+    {% else %}
+        <h1>User Information</h1>
+        <ul>
+        {% for key, value in order_data.items() %}
+        <div>
+                <p>
+                    {{ key }} : {{ value }}
+                </p> 
+        </div>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+
+{% macro show_product_info(product_data) %}
+    {% if product_data['error_msg'] %}
+    <div>
+        <h1> Error</h1>
+        <h2>{{ product_data['error_msg'] }}</h2>
+    </div>
+    {% else %}
+        <h1>{{ product_data['product_name'] }}</h1>
+        <ul>
+            <div>
+                <img src="{{ url_for('static', filename=product_data['product_image_path'] )}}" alt="">
+            </div>
+        <div>
+                <p>
+                    Price : {{ product_data['product_price'] }}
+                </p> 
+        </div>
+        </ul>
+    {% endif %}
+{% endmacro %}
